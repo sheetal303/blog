@@ -10,13 +10,15 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
+
 from pathlib import Path
 import os
-import json 
+import json
 
-with open('C:\Users\SHEETAL\Downloads\config.json') as config_file:   
-    config=json.load('config_file')
-    
+
+with open(r"C:\Users\SHEETAL\Downloads\config.json") as config_file:
+    config = json.load(config_file)
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -28,9 +30,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "config['SECRET_KEY']"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -45,6 +47,7 @@ INSTALLED_APPS = [
     "blog.apps.BlogConfig",
     "users.apps.UsersConfig",
     "crispy_forms",
+    "storages",
 ]
 
 MIDDLEWARE = [
@@ -83,8 +86,12 @@ WSGI_APPLICATION = "django_blog.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "demo_test",
+        "USER": "postgres",
+        "PASSWORD": "concious101!",
+        "HOST": "localhost",
+        "PORT": 5432,
     }
 }
 
@@ -125,7 +132,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-STATIC_ROOT = BASE_DIR/'static'/
+STATIC_ROOT = BASE_DIR / "static"
 STATIC_URL = "/static/"
 STATICFILES_DIRS = [BASE_DIR / "blog/static"]
 
@@ -145,5 +152,14 @@ EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = config.get('EMAIL_USER')
-EMAIL_HOST_PASSWORD = config.get('EMAIL_PASSWORD')
+EMAIL_HOST_USER = config.get("EMAIL_USER")
+EMAIL_HOST_PASSWORD = config.get("EMAIL_PASSWORD")
+
+AWS_ACCESS_KEY_ID = "YCM2GCQ68J7F18L0TPEG"
+AWS_SECRET_ACCESS_KEY = "cDK4PpU5zrVtKM0QlJLlunN660ZyRjY0LLO90NBc"
+AWS_STORAGE_BUCKET_NAME = "blog-storage-files"
+AWS_S3_REGION_NAME = "us-west-1"
+AWS_S3_FILE_OVERWRITE = False
+AWS_DEFAULT_ACL = None
+
+DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"

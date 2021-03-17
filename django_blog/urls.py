@@ -66,5 +66,5 @@ urlpatterns = [
 ]
 
 
-if settings.DEBUG:  # to serve static files in development stage
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# to serve static files in development stage
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

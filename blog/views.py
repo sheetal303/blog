@@ -10,16 +10,19 @@ from django.views.generic import (
     UpdateView,
     DeleteView,
 )
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 
 
+@csrf_exempt
 @login_required
 def home(request):
     context = {"posts": Post.objects.all()}
     return render(request, "blog/home.html", context)
 
 
+@csrf_exempt
 def about(request):
     return render(request, "blog/about.html", {"title": "About"})
 
